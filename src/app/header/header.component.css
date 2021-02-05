@@ -1,0 +1,51 @@
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  max-width: 60rem;
+}
+
+button {
+  margin-bottom: unset;
+}
+
+.top-bar > div {
+  margin: 1rem 1rem;
+}
+
+.title {
+  top: 1.75rem;
+  left: 1rem;
+  font-weight: bolder;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.nct-balance {
+  margin-right: 0.5rem;
+}
+
+.wallet-holder {
+  float: right;
+}
+.wallet-button {
+  font-size: 1.2rem;
+}
+.wallet-button:hover {
+  animation: colorFlash 2s linear infinite;
+}
+
+@media only screen and (max-width: 768px) {
+  .top-bar {
+    display: block;
+  }
+  .wallet-holder {
+    position: unset;
+    right: unset;
+    top: unset;
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+  }
+}

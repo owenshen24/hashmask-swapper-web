@@ -1,0 +1,12 @@
+.footer {
+  margin-top: 2rem;
+}
+
+.footer-bar {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.footer-bar > div {
+  margin: 1rem 1rem;
+}

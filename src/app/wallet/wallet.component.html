@@ -1,0 +1,16 @@
+<div class="container">
+
+  <div *ngIf="loading" class="centered">
+    Loading Hashmasks...
+  </div>
+
+  <div class="mask-item-holder">
+    <div class="mask-item" *ngFor="let m of masksList">
+      <div routerLink="/mask/{{m.id}}" routerLinkActive="active">
+        <div>#{{m.id}} {{m.name}}</div>
+        <img src="{{m.imgURL}}" class="mask-preview">
+      </div>
+    </div>
+  </div>
+
+</div>

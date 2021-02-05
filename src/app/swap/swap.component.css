@@ -1,0 +1,23 @@
+.name, .swap-type, .desired-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.mask-img {
+  width: 20rem;
+  height: auto;
+}
+
+.sub-title {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.selector > select {
+  display: inline;
+}
+
+.remove {
+  margin-top: 2rem;
+}

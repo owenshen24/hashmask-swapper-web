@@ -1,0 +1,44 @@
+<div class="centered">
+  <div class="swap-type">{{swapData.type}}</div>
+  <div class="name">#{{maskId}} {{maskData.name}}</div>
+  <div>
+    <img src="{{maskData.imgURL}}" class="mask-img">
+  </div>
+
+  <div *ngIf="isSwap()">
+    <div class="desired-name">Desired name: {{swapData.name2}}</div>
+    <div class="sub-title">Your Masks</div>
+    <div class="selector">
+      <select [(ngModel)]="selectedMask">
+        <option value="" disabled selected>Select Mask</option>
+        <option *ngFor="let n of masksList" value="{{n.id}}">
+          #{{n.id}} {{n.name}}
+        </option>
+      </select>
+      <button (click)="takeSwap()">Exchange Names</button>
+    </div>
+  </div>
+
+  <div *ngIf="isSale()">
+    <div class="desired-name">Token: <a href="https://etherscan.io/token/{{swapData.token}}">{{swapData.token}}</a></div>
+    <div class="desired-name">Amount: {{tokenPrice.toFormat()}}</div>
+    <div class="sub-title">Your Masks</div>
+    <div class="selector">
+      <select [(ngModel)]="selectedMask">
+        <option value="" disabled selected>Select Mask</option>
+        <option *ngFor="let n of masksList" value="{{n.id}}">
+          #{{n.id}} {{n.name}}
+        </option>
+      </select>
+      <button (click)="takeSale()">Buy Name For Mask</button>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="remove">
+    <div>Only original owner:</div>
+    <button (click)="removeSwap()">Remove Swap</button>
+  </div>
+
+</div>

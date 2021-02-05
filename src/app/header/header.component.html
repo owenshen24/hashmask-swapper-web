@@ -1,0 +1,19 @@
+<div class="wallet-holder">
+  <span class="nct-balance">
+    {{nctBalance.toFormat()}} NCT
+  </span>
+  <button type="button" class="wallet-button" (click)="connectWallet()">
+    <div *ngIf="wallet.connected">
+      {{wallet.userAddress.substring(0, 14)}}
+    </div>
+    <div *ngIf="!wallet.connected">
+      🏦 CONNECT WALLET
+    </div>
+  </button>
+</div>
+<div class="title">Maskswap</div>
+<div class="top-bar">
+  <div><button routerLink="/wallet" routerLinkActive="active" class="mask-menu-btn">My Masks</button></div>
+  <div><button routerLink="/all" routerLinkActive="active">All Swaps/Sells</button></div>
+  <div><button routerLink="/nftx" routerLinkActive="active">Unwrap MASK</button></div>
+</div>

@@ -1,0 +1,27 @@
+<div class="centered">
+  <div class="name">#{{maskId}} {{maskData.name}}</div>
+  <div>
+    <img src="{{maskData.imgURL}}" class="mask-img">
+  </div>
+  <div class="btn-panel" *ngIf="isOwned()">
+    <div>
+      <div class="sub-title">Set Up Name Swap</div>
+      <div>Desired Name:</div>
+      <input type="text" [(ngModel)]="desiredName">
+      <button (click)="swapMask()">Swap Name</button>
+    </div>
+    <div>
+      <div class="sub-title">Set Up Name Sale</div>
+      <div>Sale Token Address:</div>
+      <input type="text">
+      <div>Sale Token Amount:</div>
+      <input type="number">
+      <button>Sell Name</button>
+    </div>
+    <div class="nftx-section">
+      <div class="sub-title">Convert to ERC-20 via <a href="https://nftx.org/">NFTX</a></div>
+      <button (click)="wrapMask()">Wrap Hashmask</button>
+      <div class="warning">Warning: This action is <i>irreversible</i>. Wrapping your Hashmask means that you will likely not be able to get the same Hashmask back if you redeem the wrapped token.</div>
+    </div>
+  </div>
+</div>

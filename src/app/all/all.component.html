@@ -1,0 +1,12 @@
+<div class="mask-item-holder">
+  <div *ngFor="let s of swapsList" class="mask-item">
+    <div routerLink="/swap/{{s.id}}" routerLinkActive="active">
+      <div>#{{s.id}} {{s.name}}</div>
+      <img src="{{s.imgURL}}" class="mask-preview">
+      <div>{{s.type}}</div>
+      <div>{{s.name2}}</div>
+      <div>{{s.token}}</div>
+      <div>{{s.tokenPrice}}</div>
+    </div>
+  </div>
+</div>
