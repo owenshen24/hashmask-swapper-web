@@ -75,7 +75,7 @@ export class MaskComponent implements OnInit {
   async wrapMask() {
     const func = this.contract.NFTX.methods.mint(
       20,
-      this.maskId,
+      [this.maskId],
       0
     );
     await this.wallet.sendTxWithNFT(func, this.contract.HMASK, this.constants.NFTX_MASTER_ADDRESS, 500000, () => {}, () => {}, () => {});
