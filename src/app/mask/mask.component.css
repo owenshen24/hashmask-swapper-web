@@ -28,6 +28,18 @@
   margin-right: auto;
 }
 
+.token-holder {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0.2rem;
+  margin-bottom: 1rem;
+}
+
+.token-logo {
+  width: 2rem;
+  height: auto;
+}
+
 input {
   width: 25rem;
   max-width: 90%;

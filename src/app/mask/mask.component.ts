@@ -18,6 +18,8 @@ export class MaskComponent implements OnInit {
   tokenAddress: any;
   tokenAmount: any;
   desiredName: any;
+  symbol: any;
+  tokenLogo: any;
 
   constructor(public wallet: WalletService, public contract: ContractService, public constants: ConstantsService, private utils: UtilsService, private activatedRoute: ActivatedRoute) {
     this.resetData();
@@ -50,6 +52,10 @@ export class MaskComponent implements OnInit {
       "imgURL": "",
       "owner": ""
     }
+    this.symbol = "";
+    this.maskId = this.activatedRoute.snapshot.paramMap.get('id');
+    let shiftedId = (parseInt(this.maskId) + 10141)%16384;
+    this.maskData["imgURL"] = this.constants.imgURL + shiftedId + ".png";
   }
 
   async loadData() {
@@ -57,18 +63,14 @@ export class MaskComponent implements OnInit {
       this.maskData = window[this.maskId + "_data"];
     }
     else {
-      let mask = {};
-      mask["id"] = this.maskId;
+      this.maskData["id"] = this.maskId;
       let name = await this.contract.HMASK.methods.tokenNameByIndex(this.maskId).call();
       if (name === "") {
         name = "Unnamed";
       }
-      mask["name"] = name;
-      mask["owner"] = await this.contract.HMASK.methods.ownerOf(this.maskId).call();
-      let shiftedId = (parseInt(this.maskId) + 10141)%16384;
-      mask["imgURL"] = this.constants.imgURL + shiftedId + ".png";
-      window[this.maskId + "_data"] = mask;
-      this.maskData = mask;
+      this.maskData["name"] = name;
+      this.maskData["owner"] = await this.contract.HMASK.methods.ownerOf(this.maskId).call();
+      window[this.maskId + "_data"] = this.maskData;
     }
   }
 
@@ -84,6 +86,38 @@ export class MaskComponent implements OnInit {
   async swapMask() {
     const func = this.contract.SWAPPER.methods.setNameSwap(this.maskId, this.desiredName);
     await this.wallet.sendTxWithTokenAndNFT(func, this.contract.NCT, this.contract.HMASK, this.constants.SWAPPER_ADDRESS, this.constants.MODIFIED_PRICE, 500000, () => {}, () => {}, () => {});
+  }
+
+  async sellMask() {
+    let amount = new BigNumber(this.tokenAmount).multipliedBy(this.constants.PRECISION);
+    let func = this.contract.SWAPPER.methods.setNameSale(this.maskId, this.tokenAddress, amount);
+    let token = this.contract.ERC20(this.tokenAddress);
+    let maxAllowance = new BigNumber(2).pow(256).minus(1).integerValue().toFixed();
+    let allowance = new BigNumber(await token.methods.allowance(this.wallet.userAddress, this.constants.SWAPPER_ADDRESS).call());
+    if (allowance.gt(0)) {
+      if (allowance.gte(amount)) {
+        await this.wallet.sendTxWithTokenAndNFT(func, this.contract.NCT, this.contract.HMASK, this.constants.SWAPPER_ADDRESS, this.constants.MODIFIED_PRICE, 500000, () => {}, () => {}, () => {});
+      }
+    }
+    else {
+      return this.wallet.sendTx(token.methods.approve(this.constants.SWAPPER_ADDRESS, maxAllowance), async() => {
+        await this.wallet.sendTxWithTokenAndNFT(func, this.contract.NCT, this.contract.HMASK, this.constants.SWAPPER_ADDRESS, this.constants.MODIFIED_PRICE, 500000, () =>{}, () =>{}, () =>{});
+      }, ()=>{}, ()=>{});
+    }
+  }
+
+  async getToken() {
+    let tokenList = require("../../assets/token-list.json");
+    tokenList = tokenList["tokens"];
+    for (let t of tokenList) {
+      if (t["address"].toLowerCase() == this.tokenAddress.toLowerCase()) {
+        this.symbol = t["symbol"];
+        this.tokenLogo = t["logoURI"];
+        return;
+      }
+    }
+    let token = this.contract.ERC20(this.tokenAddress);
+    this.symbol = await token.methods.symbol().call();
   }
 
   isOwned() {

@@ -5,18 +5,24 @@
   </div>
   <div class="btn-panel" *ngIf="isOwned()">
     <div>
-      <div class="sub-title">Set Up Name Swap</div>
+      <div class="sub-title">🔄 Set Up Name Swap</div>
       <div>Desired Name:</div>
       <input type="text" [(ngModel)]="desiredName">
       <button (click)="swapMask()">Swap Name</button>
     </div>
+    <br>
     <div>
-      <div class="sub-title">Set Up Name Sale</div>
+      <div class="sub-title">💵 Set Up Name Sale</div>
       <div>Sale Token Address:</div>
-      <input type="text">
+      <input type="text" [(ngModel)]="tokenAddress">
+      <div class="token-holder">
+        <img src="{{tokenLogo}}" class="token-logo">
+        <span> &nbsp; {{symbol}} </span>
+      </div>
+      <button (click)="getToken()">Verify</button>
       <div>Sale Token Amount:</div>
-      <input type="number">
-      <button>Sell Name</button>
+      <input type="number" [(ngModel)]="tokenAmount">
+      <button (click)="sellMask()">Sell Name</button>
     </div>
     <div class="nftx-section">
       <div class="sub-title">Convert to ERC-20 via <a href="https://nftx.org/">NFTX</a></div>

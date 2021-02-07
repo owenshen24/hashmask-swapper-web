@@ -40,9 +40,9 @@ export class NftxComponent implements OnInit {
   }
 
   async redeem() {
-    let amt = new BigNumber(this.amount);
+    let amt = parseInt(this.amount);
     let func = this.contract.NFTX.methods.redeem(20, amt);
-    await this.wallet.sendTxWithToken(func, this.contract.XHASH, this.constants.NFTX_MASTER_ADDRESS, amt, 400000, ()=>{}, ()=>{}, ()=>{});
+    await this.wallet.sendTxWithToken(func, this.contract.XHASH, this.constants.NFTX_MASTER_ADDRESS, amt, 400000, ()=>{}, ()=>{}, (e)=>{alert(e)});
   }
 
 }
